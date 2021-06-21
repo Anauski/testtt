@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="UTF-8" />
+	<title><ui:insert name="titre" /></title>
+</h:head>
+
+<body>
+
+	<h:form id="form-menu">
+	<p:growl id="growl" showDetail="true" ></p:growl>
+		<p:menubar>
+			<p:menuitem value="Liste des Pizzas" icon="pi pi-fw pi-home" action="/pizza/liste.xhtml?faces-redirect=true" />
+			<p:menuitem value="Liste des User" icon="pi pi-fw pi-home" rendered="#{userSessionBean.hasRole('ADMIN')}" action="/user/liste.xhtml?faces-redirect=true" />
+			<p:menuitem value="Se déconnecter" icon="pi pi-fw pi-sign-out" rendered="#{userSessionBean.user != null}" actionListener="#{userSessionBean.disconnect()}" action="/index.xhtml?faces-redirect=true" />
+			</p:menubar>
+	</h:form>
+
+
+	<article>
+		<ui:insert name="corps" />
+	</article>
+
+</body>
+</html>

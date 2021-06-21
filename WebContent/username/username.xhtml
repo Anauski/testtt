@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+<h:head></h:head>
+<body>
+
+	<h:form>
+		<p:growl id="growl" showDetail="true" ></p:growl>
+		<h:panelGrid columns="3">
+		<h:outputLabel for="username" value="Username : " />
+		<p:inputText id="username" value="#{usernameBean.username}" />
+		<h:message for="username"></h:message>
+
+		
+		<h:outputLabel for="password" value="Password : " />
+		<p:password id="password" value="#{usernameBean.password}" toggleMask="true"
+			redisplay="true" />
+		<h:message for="password"></h:message>
+
+		<p:commandButton value="Se connecter" styleClass="ui-button-primary"
+			actionListener="#{usernameBean.connect()}"
+			action="/index.xhtml" update="@form" />
+			</h:panelGrid>
+			
+		<p:dataTable var="a" value="#{listePizzaBean.listePizzas}"
+				rowKey="#{a.id}" lazy="true" paginator="true" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rows="10" rowsPerPageTemplate="5,10,15" >
+
+				<p:column headerText="Nom" filterBy="#{a.nom}" sortBy="#{a.nom}"  >
+					<h:outputText value="#{a.nom}" />
+				</p:column>
+				<p:column headerText="taille" filterBy="#{a.taille}" sortBy="#{a.taille}" >
+					<h:outputText value="#{a.taille}" />
+				</p:column>
+				<p:column headerText="base" filterBy="#{a.base}" sortBy="#{a.base}" >
+					<h:outputText value="#{a.base}" />
+				</p:column>
+				<p:column headerText="prix" filterBy="#{a.prix}" sortBy="#{a.prix}" >
+					<h:outputText value="#{a.prix}" />
+				</p:column>
+				<p:column headerText="Image">
+					<o:graphicImage value="#{p.image}" dataURI="true" rendered= "#{p.image != null }" style= "max-height:100px" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions" >
+
+<ui:define name="corps">
+
+		<h:form>
+		
+			<p:commandButton icon="pi pi-plus" rendered="#{userSessionBean.hasRole('GESTIONNAIRE')}"
+						styleClass="ui-button-primary" value="Créer une nouvelle pizza" action="/pizza/fiche.xhtml" />
+
+			<p:dataTable var="a" value="#{listePizzaBean.listePizzas}"
+				rowKey="#{a.id}" lazy="true" paginator="true" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rows="10" rowsPerPageTemplate="5,10,15" >
+
+				<p:column headerText="Nom" filterBy="#{a.nom}" sortBy="#{a.nom}"  >
+					<h:outputText value="#{a.nom}" />
+				</p:column>
+				<p:column headerText="taille" filterBy="#{a.taille}" sortBy="#{a.taille}" >
+					<h:outputText value="#{a.taille}" />
+				</p:column>
+				<p:column headerText="base" filterBy="#{a.base}" sortBy="#{a.base}" >
+					<h:outputText value="#{a.base}" />
+				</p:column>
+				<p:column headerText="prix" filterBy="#{a.prix}" sortBy="#{a.prix}" >
+					<h:outputText value="#{a.prix}" />
+				</p:column>
+				<p:column headerText="Image">
+					<o:graphicImage value="#{p.image}" dataURI="true" rendered= "#{p.image != null }" style= "max-height:100px" />
+				</p:column>
+				
+				
+				<p:column headerText="Actions">
+					<p:commandButton icon="pi pi-pencil" rendered="#{userSessionBean.hasRole('ADMIN')}"
+						styleClass="rounded-button ui-button-primary" actionListener="#{listePizzaBean.modifier(a)}" action="/pizza/fiche.xhtml?faces-redirect=true" />
+					<p:commandButton icon="pi pi-times" rendered="#{userSessionBean.hasRole('ADMIN')}"
+						styleClass="rounded-button ui-button-danger"
+						action="#{listePizzaBean.delete(a)}" update="@all">
+						
+					<p:confirm header="Confirmation" message="Etes vous sur?" icon="ui-icon-alert"/>
+						</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog global="true">
+				<p:commandButton value="Oui" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Non" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>

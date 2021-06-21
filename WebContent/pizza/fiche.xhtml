@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      template="/WEB-INF/templates/template.xhtml"> 
+
+<ui:define name="corps">
+
+		<h:form>
+
+
+			<p:fieldset legend="Fiche pizza">
+
+				<p:panelGrid columns="3">
+
+					<p:outputLabel for="nom" value="Nom:" />
+					<p:inputText id="nom" value="#{fichePizzaBean.pizza1.nom}" />
+					<h:message for="nom" style="color:red;" />
+					
+					<p:outputLabel for="taille" value="Taille :" />
+					<p:selectOneMenu id="taille" value="#{fichePizzaBean.pizza1.taille}">
+						<f:selectItems value="#{fichePizzaBean.taille}" var="p" itemValue="#{p}" itemLabel="#{p.libelle}" />
+					</p:selectOneMenu>
+					<p:message for="taille"></p:message>
+					
+					<p:outputLabel for="base" value="Base :" />
+					<p:selectOneMenu id="base" value="#{fichePizzaBean.pizza1.base}">
+						<f:selectItems value="#{fichePizzaBean.base}" var="p" itemValue="#{p}" itemLabel="#{p.libelle}" />
+					</p:selectOneMenu>
+					<p:message for="base"></p:message>
+					
+
+					
+					<p:outputLabel for="prix" value="prix" />
+					<p:inputNumber id="prix" value="#{fichePizzaBean.pizza1.prix}" decimalPlaces="0"/>
+					<h:message for="prix" style="color:red;" />
+					
+					<p:outputLabel for="image" value="Image:"/>
+ 						<p:fileUpload skinSimple="true" value="#{fichePizzaBean.image}" id="image" mode="simple"/>
+ 					<p:message for="image"></p:message>
+
+<!-- 					<p:outputLabel for="ingredients" value="Liste des ingredients :" /> -->
+<!-- 					<p:pickList id="ingredients" value="#{fichePizzaBean.pizza1.ingredients}" var="ingredients" itemLabel="#{ingredients}" itemValue="#{ingredients}"/> -->
+<!-- 					<p:message for="ingredients"></p:message> -->
+
+
+				</p:panelGrid>
+
+
+				<p:commandButton value="Valider" styleClass="ui-button-primary"
+					actionListener="#{fichePizzaBean.enregistrer()}"
+					action="/pizza/liste.xhtml?faces-redirect=true" update="@form" />
+				<p:commandButton value="retour" styleClass="ui-button-secondary"
+					action="/pizza/liste.xhtml?faces-redirect=true" immediate="true" />
+
+			</p:fieldset>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
